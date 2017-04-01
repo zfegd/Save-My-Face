@@ -21,7 +21,7 @@ function maybeAddMyButton() {
         btn = document.createElement("BUTTON");
         btn.setAttribute('id', 'myButtonID');
         btn.className = "_1mf7 _4jy0 _4jy3 _4jy1 _51sy selected _42ft";
-        btn.style = "height:30px;width:30px;background:url(https://image.flaticon.com/teams/new/1-freepik.jpg);background-size:100%";
+        btn.setAttribute("style", "height:30px;background:url(https://raw.githubusercontent.com/zfegd/Save-My-Face/master/ChromeExtensionsAVersion/Plugin/icon128.png);background-size:100%");
         btn.onclick = doMyButton;
         getContainer().insertBefore(btn,postButton());
     }
@@ -92,7 +92,11 @@ document.addEventListener('DOMContentLoaded', function () {
  * sends a get request to the server and returns a responds to the client.
  */
 function sendToCheck(info,tab) {
-    $.get( "https://savemyfacedeveloper.herokuapp.com/?Payload="+encodeURIComponent(info), function( data ) {
+    console.log("hello"+info);
+
+    $.get( "https://savemyfacedeveloper.herokuapp.com/?Payload="+encodeURIComponent(info.trim()), function( data ) {
+        console.log("hello"+info);
+
         console.log(data);
         errorMessage(data);
     });
@@ -109,7 +113,8 @@ function httpGet(theUrl)
 function sendToCheckSelection(info,tab) {
 
     try {
-        var a = httpGet("https://savemyfacedeveloper.herokuapp.com/?Payload="+encodeURIComponent(info));
+        var a = httpGet("https://savemyfacedeveloper.herokuapp.com/?Payload="+encodeURIComponent(info.trim()));
+        console.log("hello"+info);
             errorMessage(a);
     }catch(e) {
     }
