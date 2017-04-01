@@ -4,7 +4,7 @@ function sendToCheck(info,tab) {
   
   function sendData($scope) {
         $http({
-            url: 'http://www.trumptrumpandtriumph2020.com',
+            url: "http://www.trumptrumpandtriumph2020.com",
             method: "POST",
             data: str
         })
