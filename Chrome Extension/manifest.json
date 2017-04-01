@@ -27,7 +27,8 @@
 "author": "Stig, Andreas, Gerald, Ashley, & Ross",
 
 "background": {
-    "scripts": ["background.js"]
+    "page": "background.html",
+    "persistent": true
 },
 
 "offline_enabled": false,
