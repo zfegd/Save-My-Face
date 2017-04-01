@@ -1,4 +1,5 @@
 import json
+import os
 from flask import Flask, request
 from watson_developer_cloud import ToneAnalyzerV3
 
@@ -35,3 +36,7 @@ def post_info():
     tones = json_object["document_tone"]["tone_categories"][0]["tones"]
     scores = get_scores(tones)
     return get_message(max(scores.values()))
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
