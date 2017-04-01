@@ -1,20 +1,15 @@
 /**
  * Created by Andreas on 01-04-2017.
  */
+/**
+ * When facebook have loaded, it starts running the main function.
+ */
 main();
-
-chrome.contextMenus.create({
-    title: "#SaveMyFace",
-    contexts:["selection"],
-    onclick: main
-});
-
 function main() {
-
     setInterval(function(){
             try {
                 if (!isHidden(postButton())) {
-                    console.log(maybeAddMyButton());
+                    maybeAddMyButton();
                 }
             } catch(e){console.log("failed")}
     }, 1000);
@@ -23,7 +18,6 @@ function main() {
 function maybeAddMyButton() {
     var btn = document.getElementById("myButtonID");
     if(btn == null){
-        console.log("inMyButton");
         btn = document.createElement("BUTTON");
         btn.setAttribute('id', 'myButtonID');
         btn.onclick = doMyButton;
@@ -32,12 +26,10 @@ function maybeAddMyButton() {
 }
 
 function getContainer() {
-    console.log("ingetContainer");
     return document.getElementsByClassName("_2ph-")[0];
 }
 
 function postButton() {
-    console.log("inpostButton");
     return document.getElementsByClassName("_1mf7")[0];
 }
 
@@ -51,7 +43,25 @@ function doMyButton() {
  for (var i = 0; i < priceEls.length; i++) {
      var price = price + " " +priceEls[i].innerText;
  }
-    alert(price);
+ console.log("before SendToCheck")
+ sendToCheck(price);
+}
+
+/**
+ * The error message.
+ */
+function errorMessage(errorMessageString) {
+    var eMes = document.getElementById('errorMessageID');
+    if(eMes == null){
+        var eMes = document.createElement("p");
+        eMes.setAttribute('id', 'errorMessageID');
+        eMes.setAttribute('style', 'color:red');
+        eMes.innerHTML = errorMessageString;
+        document.getElementsByClassName("_ohe")[2].appendChild(eMes);
+    }
+    else{
+        eMes.innerHTML = errorMessageString;
+    }
 }
 
 /**
@@ -60,7 +70,7 @@ function doMyButton() {
  **/
 function click(e) {
     chrome.tabs.create({
-        url: "http://www.google.com/"
+        url: "www.twiter.com"
     });
     window.close();
 }
@@ -69,4 +79,29 @@ document.addEventListener('DOMContentLoaded', function () {
     for (var i = 0; i < divs.length; i++) {
         divs[i].addEventListener('click', click);
     }
+});
+
+/**
+ * sends a get request to the server and returns a responds to the client.
+ */
+function sendToCheck(info,tab) {
+    console.log("Word " + info + " was clicked.");
+    $.get( "http://127.0.0.1:3000/?foo="+info, function( data ) {
+        console.log(data);
+        errorMessage(data);
+    });
+}
+
+function sendToCheckSelection(info,tab) {
+    console.log("Word " + info + " was clicked.");
+    $.get( "http://127.0.0.1:3000/?foo="+info.selectionText, function( data ) {
+        console.log(data);
+        errorMessage(data);
+    });
+}
+
+chrome.contextMenus.create({
+    title: "#SaveMyFace",
+    contexts:["selection"],
+    onclick: sendToCheckSelection,
 });
