@@ -1,6 +1,7 @@
 import json
 import os
 from flask import Flask, request
+from flask_cors import CORS, cross_origin
 from watson_developer_cloud import ToneAnalyzerV3
 
 tone_analyzer = ToneAnalyzerV3(
@@ -9,14 +10,15 @@ tone_analyzer = ToneAnalyzerV3(
     version="2017-03-03")
 
 app = Flask(__name__)
+CORS(app)
 
 def get_message(largest):
     if (largest < 0.4):
-        return "No problem"
+        return "Your message seems fine."
     elif (largest < 0.5):
-        return "Mild"
+        return "Your message might be slightly emotionally charged."
     else:
-        return "Strong"
+        return "Your message is emotionally charged. Consider revising."
 
 def get_scores(tones) :
     new_tones = {}
@@ -31,8 +33,9 @@ def get_scores(tones) :
 
 
 @app.route('/', methods=["GET","POST"])
+
 def post_info():
-    input_text = request.form.get("payload")
+    input_text = request.args.get("payload")
     json_object = tone_analyzer.tone(text=input_text)
     tones = json_object["document_tone"]["tone_categories"][0]["tones"]
     scores = get_scores(tones)
