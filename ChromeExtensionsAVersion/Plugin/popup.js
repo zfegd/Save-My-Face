@@ -20,6 +20,8 @@ function maybeAddMyButton() {
     if(btn == null){
         btn = document.createElement("BUTTON");
         btn.setAttribute('id', 'myButtonID');
+        btn.className = "_1mf7 _4jy0 _4jy3 _4jy1 _51sy selected _42ft";
+        btn.style = "height:30px;width:30px;background:url(https://image.flaticon.com/teams/new/1-freepik.jpg);background-size:100%";
         btn.onclick = doMyButton;
         getContainer().insertBefore(btn,postButton());
     }
@@ -51,16 +53,21 @@ function doMyButton() {
  * The error message.
  */
 function errorMessage(errorMessageString) {
-    var eMes = document.getElementById('errorMessageID');
-    if(eMes == null){
-        var eMes = document.createElement("p");
-        eMes.setAttribute('id', 'errorMessageID');
-        eMes.setAttribute('style', 'color:red');
-        eMes.innerHTML = errorMessageString;
-        document.getElementsByClassName("_ohe")[2].appendChild(eMes);
+    if (!isHidden(postButton())) {
+        var eMes = document.getElementById('errorMessageID');
+        if (eMes == null) {
+            var eMes = document.createElement("p");
+            eMes.setAttribute('id', 'errorMessageID');
+            eMes.setAttribute('style', 'color:red');
+            eMes.innerHTML = errorMessageString;
+            document.getElementsByClassName("_ohe")[2].appendChild(eMes);
+        }
+        else {
+            eMes.innerHTML = errorMessageString;
+        }
     }
     else{
-        eMes.innerHTML = errorMessageString;
+        window.alert("Responds: "+ errorMessageString);
     }
 }
 
@@ -85,23 +92,30 @@ document.addEventListener('DOMContentLoaded', function () {
  * sends a get request to the server and returns a responds to the client.
  */
 function sendToCheck(info,tab) {
-    console.log("Word " + info + " was clicked.");
-    $.get( "http://127.0.0.1:3000/?foo="+info, function( data ) {
+    $.get( "https://savemyfacedeveloper.herokuapp.com/?Payload="+encodeURIComponent(info), function( data ) {
         console.log(data);
         errorMessage(data);
     });
+}
+
+function httpGet(theUrl)
+{
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+    xmlHttp.send( null );
+    return xmlHttp.responseText;
 }
 
 function sendToCheckSelection(info,tab) {
-    console.log("Word " + info + " was clicked.");
-    $.get( "http://127.0.0.1:3000/?foo="+info.selectionText, function( data ) {
-        console.log(data);
-        errorMessage(data);
-    });
+
+    try {
+        var a = httpGet("https://savemyfacedeveloper.herokuapp.com/?Payload="+encodeURIComponent(info));
+            errorMessage(a);
+    }catch(e) {
+    }
 }
 
-chrome.contextMenus.create({
-    title: "#SaveMyFace",
-    contexts:["selection"],
-    onclick: sendToCheckSelection,
+chrome.runtime.onMessage.addListener(function(inputText){
+    // console.log("Happy to be here " + JSON.stringify(arguments));
+    sendToCheckSelection(inputText);
 });
