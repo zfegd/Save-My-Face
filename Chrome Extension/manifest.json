@@ -1,0 +1,45 @@
+{
+"manifest_version": 2,
+
+"name": "Save My Face",
+"description": "Check your rants before you submit them forever online!",
+
+"version": "0.1.000",
+"default_locale": "en",
+
+"icons": { "16": "img/16.png",
+           "32": "img/32.png",
+           "48": "img/48.png",
+           "128": "img/128.png"
+         },
+
+"browser_action": {
+    "default_icon": 
+        { "16": "img/16.png",
+           "32": "img/32.png",
+           "48": "img/48.png",
+           "128": "img/128.png"
+        },
+    "default_popup": "defaultpopup.html",
+    "default_title": "Click here to #SaveMyFace!"
+},
+
+"author": "Stig, Andreas, Gerald, Ashley, & Ross",
+
+"background": {
+    "scripts": ["background.js"]
+},
+
+"offline_enabled": false,
+
+"permissions": [
+    "activeTab",
+    "clipboardRead",
+    "clipboardWrite",
+    "contextMenus",
+    "declarativeContent",
+    "notifications",
+    "pageCapture"
+]
+
+}
