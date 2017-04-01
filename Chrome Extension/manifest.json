@@ -25,14 +25,21 @@
 },
 
 "author": "Stig, Andreas, Gerald, Ashley, & Ross",
+
 "background": {
-    "scripts:": ["background.js"],
-    "page": "background.html",
-    "persistent": false
+    "scripts": ["background.js"]
 },
 
+"offline_enabled": false,
+
 "permissions": [
-    "activeTab"
+    "activeTab",
+    "clipboardRead",
+    "clipboardWrite",
+    "contextMenus",
+    "declarativeContent",
+    "notifications",
+    "pageCapture"
 ]
 
 }
