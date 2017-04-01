@@ -1,4 +1,5 @@
-import json, sys
+import json
+from flask import Flask, request
 from watson_developer_cloud import ToneAnalyzerV3
 
 tone_analyzer = ToneAnalyzerV3(
@@ -6,18 +7,22 @@ tone_analyzer = ToneAnalyzerV3(
     password="RAZTAsc3A00N",
     version="2017-03-03")
 
-input_text = sys.argv[1]
+app = Flask(__name__)
 
-json_object = tone_analyzer.tone(text=input_text)
-tones = json_object["document_tone"]["tone_categories"][0]["tones"]
+def get_tones(tones) :
+    new_tones = {}
+    for tone in tones:
+        if (tone["tone_name"] == "Anger"):
+            new_tones["anger"] = tone["score"]
+        elif (tone["tone_name"] == "Disgust"):
+            new_tones["disgust"] = tone["score"]
+        elif (tone["tone_name"] == "Sadness"):
+            new_tones["sadness"] = tone["score"]
+    return new_tones
 
-new_tones = {}
-for tone in tones:
-    if (tone["tone_name"] == "Anger") :
-        new_tones["anger"] = tone["score"]
-    elif (tone["tone_name"] == "Disgust") :
-          new_tones["disgust"] = tone["score"]
-    elif (tone["tone_name"] == "Sadness") :
-        new_tones["sadness"] = tone["score"]
-
-print(new_tones)
+@app.route('/', methods=["POST"])
+def post_info() :
+    input_text = request.form.get("payload")
+    json_object = tone_analyzer.tone(text=input_text)
+    tones = json_object["document_tone"]["tone_categories"][0]["tones"]
+    return json.dumps(get_tones(tones))
