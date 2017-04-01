@@ -29,7 +29,7 @@ def get_scores(tones) :
             new_tones["sadness"] = tone["score"]
     return new_tones
 
-@app.route('/', methods=["POST"])
+@app.route('/', methods=["GET","POST"])
 def post_info():
     input_text = request.form.get("payload")
     json_object = tone_analyzer.tone(text=input_text)
