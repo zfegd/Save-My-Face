@@ -1,41 +1,38 @@
 {
-"manifest_version": 1,
+"manifest_version": 2,
 
 "name": "Save My Face",
 "description": "Check your rants before you submit them forever online!",
 
-"version": 0.1.000,
+"version": "0.1.000",
 "default_locale": "en",
 
-"icons:" { "16": "imgs/16.png",
-           "32": "imgs/32.png",
-           "48": "imgs/48.png",
-           "128": "imgs/128.png",
-           "16f": "imgs/16faded.png",
-           "32f": "imgs/32faded.png",
-           "48f": "imgs/48faded.png",
-           "128f": "imgs/128faded.png",
+"icons": { "16": "img/16.png",
+           "32": "img/32.png",
+           "48": "img/48.png",
+           "128": "img/128.png"
          },
 
 "browser_action": {
     "default_icon": 
-        { "16": "imgs/16.png",
-           "32": "imgs/32.png",
-           "48": "imgs/48.png",
-           "128": "imgs/128.png"
+        { "16": "img/16.png",
+           "32": "img/32.png",
+           "48": "img/48.png",
+           "128": "img/128.png"
         },
     "default_popup": "defaultpopup.html",
-    "default_title": "Save My Face",
+    "default_title": "Click here to #SaveMyFace!"
 },
 
 "author": "Stig, Andreas, Gerald, Ashley, & Ross",
-"background:" {
+"background": {
     "scripts:": ["background.js"],
-    "persistent": false,
-}
-
-"permissions": {
-    "activeTab",
+    "page": "background.html",
+    "persistent": false
 },
+
+"permissions": [
+    "activeTab"
+]
 
 }
