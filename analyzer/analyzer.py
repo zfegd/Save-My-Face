@@ -9,7 +9,15 @@ tone_analyzer = ToneAnalyzerV3(
 
 app = Flask(__name__)
 
-def get_tones(tones) :
+def get_message(largest):
+    if (largest < 0.4):
+        return "No problem"
+    elif (largest < 0.5):
+        return "Mild"
+    else:
+        return "Strong"
+
+def get_scores(tones) :
     new_tones = {}
     for tone in tones:
         if (tone["tone_name"] == "Anger"):
@@ -21,8 +29,9 @@ def get_tones(tones) :
     return new_tones
 
 @app.route('/', methods=["POST"])
-def post_info() :
+def post_info():
     input_text = request.form.get("payload")
     json_object = tone_analyzer.tone(text=input_text)
     tones = json_object["document_tone"]["tone_categories"][0]["tones"]
-    return json.dumps(get_tones(tones))
+    scores = get_scores(tones)
+    return get_message(max(scores.values()))
