@@ -53,22 +53,23 @@ function doMyButton() {
  * The error message.
  */
 function errorMessage(errorMessageString) {
-    if (!isHidden(postButton())) {
+   // if (!isHidden(postButton())) {
         var eMes = document.getElementById('errorMessageID');
         if (eMes == null) {
             var eMes = document.createElement("p");
             eMes.setAttribute('id', 'errorMessageID');
             eMes.setAttribute('style', 'color:red');
             eMes.innerHTML = errorMessageString;
-            document.getElementsByClassName("_ohe")[2].appendChild(eMes);
+            document.getElementById("myButtonID").parentNode.parentNode.parentNode.childNodes[0].appendChild(eMes);
+
         }
         else {
             eMes.innerHTML = errorMessageString;
-        }
-    }
-    else{
-        window.alert("Responds: "+ errorMessageString);
-    }
+         }
+    // }
+    // else{
+    //     window.alert("Responds: "+ errorMessageString);
+    // }
 }
 
 /**
@@ -94,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function () {
 function sendToCheck(info,tab) {
     console.log("hello"+info);
 
-    $.get( "https://savemyfacedeveloper.herokuapp.com/?Payload="+encodeURIComponent(info.trim()), function( data ) {
+    $.get( "https://savemyfacedeveloper.herokuapp.com/?payload="+encodeURIComponent(info.trim()), function( data ) {
         console.log("hello"+info);
 
         console.log(data);
@@ -113,7 +114,7 @@ function httpGet(theUrl)
 function sendToCheckSelection(info,tab) {
 
     try {
-        var a = httpGet("https://savemyfacedeveloper.herokuapp.com/?Payload="+encodeURIComponent(info.trim()));
+        var a = httpGet("https://savemyfacedeveloper.herokuapp.com/?payload="+encodeURIComponent(info.trim()));
         console.log("hello"+info);
             errorMessage(a);
     }catch(e) {
