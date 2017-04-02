@@ -53,7 +53,7 @@ function doMyButton() {
  * The error message.
  */
 function errorMessage(errorMessageString) {
-   // if (!isHidden(postButton())) {
+   if (!isHidden(postButton())) {
         var eMes = document.getElementById('errorMessageID');
         if (eMes == null) {
             var eMes = document.createElement("p");
@@ -61,15 +61,14 @@ function errorMessage(errorMessageString) {
             eMes.setAttribute('style', 'color:red');
             eMes.innerHTML = errorMessageString;
             document.getElementById("myButtonID").parentNode.parentNode.parentNode.childNodes[0].appendChild(eMes);
-
         }
         else {
             eMes.innerHTML = errorMessageString;
          }
-    // }
-    // else{
-    //     window.alert("Responds: "+ errorMessageString);
-    // }
+    }
+    else{
+        window.alert("Responds: "+ errorMessageString);
+    }
 }
 
 /**
