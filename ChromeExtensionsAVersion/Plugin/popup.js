@@ -73,11 +73,11 @@ function errorMessage(errorMessageString) {
 
 /**
  * When the Chrome Extension in the corner of the browser gets clicked,
- * this will send you to the documentation of the extensin(currently sends you to www.google.com).
+ * this will send you to the documentation of the extensin(currently sends you to git repo).
  **/
 function click(e) {
     chrome.tabs.create({
-        url: "www.twiter.com"
+        url: "https://github.com/zfegd/Save-My-Face"
     });
     window.close();
 }
